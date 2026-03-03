@@ -1,0 +1,220 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  ADMIN
+  CLIENT
+}
+
+enum TripStatus {
+  DRAFT
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum SuggestionType {
+  ALTERATION
+  NEW_POINT
+  REMOVAL
+}
+
+enum SuggestionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  name          String
+  passwordHash  String
+  role          Role     @default(CLIENT)
+  cpf           String?  @unique
+  phone         String?
+  emailVerified DateTime?
+  image         String?
+  
+  // Relations
+  trips         Trip[]   @relation("TripParticipants")
+  suggestions   Suggestion[]
+  auditLogs     AuditLog[]
+  sessions      Session[]
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@index([email])
+  @@map("users")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  refreshToken String   @unique
+  expiresAt    DateTime
+  ipAddress    String?
+  userAgent    String?
+  
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt    DateTime @default(now())
+  
+  @@index([userId])
+  @@index([refreshToken])
+  @@map("sessions")
+}
+
+model Trip {
+  id           String      @id @default(cuid())
+  title        String
+  destination  String
+  description  String?
+  coverImage   String?
+  
+  startDate    DateTime
+  endDate      DateTime
+  timezone     String      @default("America/Sao_Paulo")
+  
+  totalCost    Decimal     @default(0) @db.Decimal(10,2)
+  currency     String      @default("BRL")
+  
+  status       TripStatus  @default(DRAFT)
+  
+  // Relations M-N
+  clients      User[]      @relation("TripParticipants")
+  
+  // Relations
+  days         ItineraryDay[]
+  suggestions  Suggestion[]
+  auditLogs    AuditLog[]
+  
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  
+  @@index([status])
+  @@index([startDate, endDate])
+  @@map("trips")
+}
+
+model ItineraryDay {
+  id        String   @id @default(cuid())
+  date      DateTime @db.Date
+  title     String?
+  notes     String?
+  
+  tripId    String
+  trip      Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  
+  items     ItineraryItem[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@unique([tripId, date])
+  @@index([tripId])
+  @@map("itinerary_days")
+}
+
+model ItineraryItem {
+  id           String   @id @default(cuid())
+  title        String
+  description  String?
+  
+  locationName String
+  address      String?
+  latitude     Decimal  @db.Decimal(10,8)
+  longitude    Decimal  @db.Decimal(11,8)
+  placeId      String?  // Google Place ID
+  imageUrl     String?  // Imagem ilustrativa
+  
+  cost         Decimal  @default(0) @db.Decimal(10,2)
+  category     String?  // RESTAURANT, ATTRACTION, HOTEL, TRANSPORT
+  
+  startTime    DateTime @db.Time
+  endTime      DateTime @db.Time
+  
+  orderIndex   Int
+  
+  dayId        String
+  day          ItineraryDay @relation(fields: [dayId], references: [id], onDelete: Cascade)
+  
+  suggestions  Suggestion[]
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  @@index([dayId])
+  @@index([latitude, longitude]) // Spatial queries
+  @@map("itinerary_items")
+}
+
+model Suggestion {
+  id            String           @id @default(cuid())
+  content       String
+  type          SuggestionType
+  status        SuggestionStatus @default(PENDING)
+  
+  // For alterations
+  itemId        String?
+  item          ItineraryItem?   @relation(fields: [itemId], references: [id], onDelete: SetNull)
+  
+  // For new points (JSON)
+  proposedData  Json?
+  
+  tripId        String
+  trip          Trip             @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  
+  userId        String
+  user          User             @relation(fields: [userId], references: [id])
+  
+  // Admin response
+  adminNotes    String?
+  reviewedAt    DateTime?
+  reviewedBy    String?
+  
+  auditLogs     AuditLog[]
+  
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  
+  @@index([tripId, status])
+  @@index([userId])
+  @@map("suggestions")
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  action      String   // CREATE_TRIP, APPROVE_SUGGESTION, etc
+  entityType  String   // TRIP, SUGGESTION, ITINERARY_ITEM
+  entityId    String
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  
+  tripId      String?
+  trip        Trip?    @relation(fields: [tripId], references: [id], onDelete: SetNull)
+  
+  suggestionId String?
+  suggestion   Suggestion? @relation(fields: [suggestionId], references: [id], onDelete: SetNull)
+  
+  metadata    Json?    // Before/after data
+  ipAddress   String?
+  
+  createdAt   DateTime @default(now())
+  
+  @@index([userId])
+  @@index([tripId])
+  @@index([entityType, entityId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}

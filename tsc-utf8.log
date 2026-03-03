@@ -1,0 +1,20 @@
+﻿.next/types/validator.ts(144,31): error TS2344: Type 'typeof import("C:/Users/jpandrade/Documents/GitHub/NextTrip/src/app/api/v1/itinerary/days/[tripId]/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/v1/itinerary/days/[tripId]">'.
+  Types of property 'GET' are incompatible.
+    Type '(req: Request, { params }: { params: { tripId: string; }; }) => Promise<NextResponse<{ error: string; }> | NextResponse<{ days: ({ items: { id: string; createdAt: Date; updatedAt: Date; ... 12 more ...; dayId: string; }[]; } & { ...; })[]; }>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ tripId: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ tripId: string; }>; }' is not assignable to type '{ params: { tripId: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'tripId' is missing in type 'Promise<{ tripId: string; }>' but required in type '{ tripId: string; }'.
+.next/types/validator.ts(171,31): error TS2344: Type 'typeof import("C:/Users/jpandrade/Documents/GitHub/NextTrip/src/app/api/v1/suggestions/[suggestionId]/route")' does not satisfy the constraint 'RouteHandlerConfig<"/api/v1/suggestions/[suggestionId]">'.
+  Types of property 'PATCH' are incompatible.
+    Type '(req: Request, { params }: { params: { suggestionId: string; }; }) => Promise<NextResponse<{ suggestion: { id: string; status: SuggestionStatus; type: SuggestionType; ... 9 more ...; userId: string; }; }> | NextResponse<...>>' is not assignable to type '(request: NextRequest, context: { params: Promise<{ suggestionId: string; }>; }) => void | Response | Promise<void | Response>'.
+      Types of parameters '__1' and 'context' are incompatible.
+        Type '{ params: Promise<{ suggestionId: string; }>; }' is not assignable to type '{ params: { suggestionId: string; }; }'.
+          Types of property 'params' are incompatible.
+            Property 'suggestionId' is missing in type 'Promise<{ suggestionId: string; }>' but required in type '{ suggestionId: string; }'.
+src/app/api/auth/login/route.ts(69,53): error TS2339: Property 'errors' does not exist on type 'ZodError<unknown>'.
+src/app/api/auth/register/route.ts(74,53): error TS2339: Property 'errors' does not exist on type 'ZodError<unknown>'.
+src/app/api/v1/suggestions/[suggestionId]/route.ts(87,21): error TS2322: Type 'string | null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+  Type 'null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+src/app/api/v1/suggestions/route.ts(41,17): error TS2322: Type 'string | null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+  Type 'null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.

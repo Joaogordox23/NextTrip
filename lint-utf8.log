@@ -1,0 +1,61 @@
+﻿
+C:\Users\jpandrade\Documents\GitHub\NextTrip\src\app\(auth)\login\page.tsx
+  62:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jpandrade\Documents\GitHub\NextTrip\src\app\(auth)\register\page.tsx
+  64:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jpandrade\Documents\GitHub\NextTrip\src\app\(dashboard)\admin\suggestions\page.tsx
+   3:20  warning  'useMutation' is defined but never used                          @typescript-eslint/no-unused-vars
+   9:10  warning  'toast' is defined but never used                                @typescript-eslint/no-unused-vars
+  16:11  warning  'queryClient' is assigned a value but never used                 @typescript-eslint/no-unused-vars
+  66:50  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  78:37  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  78:51  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+C:\Users\jpandrade\Documents\GitHub\NextTrip\src\app\(dashboard)\admin\trips\[tripId]\page.tsx
+   27:50  error  Unexpected any. Specify a different type                                                                                                                                                   @typescript-eslint/no-explicit-any
+   59:21  error  React Hook "useMemo" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?  react-hooks/rules-of-hooks
+   61:35  error  Unexpected any. Specify a different type                                                                                                                                                   @typescript-eslint/no-explicit-any
+   62:34  error  Unexpected any. Specify a different type                                                                                                                                                   @typescript-eslint/no-explicit-any
+  128:40  error  Unexpected any. Specify a different type                                                                                                                                                   @typescript-eslint/no-explicit-any
+  144:62  error  Unexpected any. Specify a different type                                                                                                                                                   @typescript-eslint/no-explicit-any
+
+C:\Users\jpandrade\Documents\GitHub\NextTrip\src\app\(dashboard)\admin\trips\page.tsx
+  50:44  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jpandrade\Documents\GitHub\NextTrip\src\app\(dashboard)\client\my-trips\page.tsx
+   5:10  warning  'Button' is defined but never used        @typescript-eslint/no-unused-vars
+  59:44  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jpandrade\Documents\GitHub\NextTrip\src\app\(dashboard)\client\trips\[tripId]\page.tsx
+   30:50  error  Unexpected any. Specify a different type                                                                                                                                                   @typescript-eslint/no-explicit-any
+   72:21  error  React Hook "useMemo" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?  react-hooks/rules-of-hooks
+   74:35  error  Unexpected any. Specify a different type                                                                                                                                                   @typescript-eslint/no-explicit-any
+   75:34  error  Unexpected any. Specify a different type                                                                                                                                                   @typescript-eslint/no-explicit-any
+  158:40  error  Unexpected any. Specify a different type                                                                                                                                                   @typescript-eslint/no-explicit-any
+  173:62  error  Unexpected any. Specify a different type                                                                                                                                                   @typescript-eslint/no-explicit-any
+
+C:\Users\jpandrade\Documents\GitHub\NextTrip\src\app\api\v1\itinerary\days\[tripId]\route.ts
+  32:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jpandrade\Documents\GitHub\NextTrip\src\app\api\v1\suggestions\[suggestionId]\route.ts
+  98:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jpandrade\Documents\GitHub\NextTrip\src\app\api\v1\suggestions\route.ts
+  100:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jpandrade\Documents\GitHub\NextTrip\src\app\api\v1\trips\route.ts
+  85:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jpandrade\Documents\GitHub\NextTrip\src\components\features\map\google-map.tsx
+  32:12  warning  'map' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\jpandrade\Documents\GitHub\NextTrip\src\components\features\trips\trip-card.tsx
+  5:44  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\jpandrade\Documents\GitHub\NextTrip\src\lib\auth\jwt.ts
+  25:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+Ô£û 30 problems (21 errors, 9 warnings)
+
