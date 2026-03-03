@@ -582,51 +582,49 @@ export default function TripDetailsPage({ params }: { params: Promise<{ tripId: 
             </div>
 
             <Dialog open={isItemDialogOpen} onOpenChange={setIsItemDialogOpen}>
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent className="sm:max-w-[600px] md:max-w-[700px]">
                     <DialogHeader>
                         <DialogTitle>{editingItemId ? "Editar Atividade" : "Nova Atividade"}</DialogTitle>
                         <DialogDescription>
                             {editingItemId ? "Atualize os detalhes do local ou evento." : "Adicione um novo local ou evento para esta data."}
                         </DialogDescription>
                     </DialogHeader>
-                    <form onSubmit={handleCreateItem} className="space-y-4 mt-2">
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium">Nome do Local</label>
+                    <form onSubmit={handleCreateItem} className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                        <div className="space-y-2 md:col-span-2">
+                            <label className="text-sm font-medium">Nome do Local / Título</label>
                             <Input required value={itemTitle} onChange={(e) => setItemTitle(e.target.value)} placeholder="Ex: Museu do Louvre" />
                         </div>
+                        <div className="space-y-2 md:col-span-2">
+                            <label className="text-sm font-medium">Endereço ou Ponto de Refêrencia</label>
+                            <Input required value={itemLocation} onChange={(e) => setItemLocation(e.target.value)} placeholder="Ex: Av. Champs-Élysées, Paris" />
+                        </div>
+                        <div className="space-y-2 text-zinc-800 dark:text-zinc-200">
+                            <label className="text-sm font-medium">Horário Início</label>
+                            <Input required type="time" value={itemStartTime} onChange={(e) => setItemStartTime(e.target.value)} />
+                        </div>
+                        <div className="space-y-2 text-zinc-800 dark:text-zinc-200">
+                            <label className="text-sm font-medium">Horário Fim</label>
+                            <Input required type="time" value={itemEndTime} onChange={(e) => setItemEndTime(e.target.value)} />
+                        </div>
+
                         <div className="space-y-2">
-                            <label className="text-sm font-medium">Endereço ou Cidade</label>
-                            <Input required value={itemLocation} onChange={(e) => setItemLocation(e.target.value)} placeholder="Ex: Paris, França" />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium">Horário Início</label>
-                                <Input required type="time" value={itemStartTime} onChange={(e) => setItemStartTime(e.target.value)} />
-                            </div>
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium">Horário Fim</label>
-                                <Input required type="time" value={itemEndTime} onChange={(e) => setItemEndTime(e.target.value)} />
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium">Categoria</label>
-                                <select
-                                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                                    value={itemCategory} onChange={(e) => setItemCategory(e.target.value)}
-                                >
-                                    <option value="RESTAURANT">Restaurante</option>
-                                    <option value="ATTRACTION">Atração</option>
-                                    <option value="HOTEL">Hotel</option>
-                                    <option value="TRANSPORT">Transporte</option>
-                                </select>
-                            </div>
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium">Custo Estimado (R$)</label>
-                                <Input type="number" min="0" value={itemCost} onChange={(e) => setItemCost(e.target.value)} />
-                            </div>
+                            <label className="text-sm font-medium">Categoria</label>
+                            <select
+                                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-primary/50"
+                                value={itemCategory} onChange={(e) => setItemCategory(e.target.value)}
+                            >
+                                <option value="RESTAURANT">Restaurante</option>
+                                <option value="ATTRACTION">Atração</option>
+                                <option value="HOTEL">Hotel</option>
+                                <option value="TRANSPORT">Transporte</option>
+                            </select>
                         </div>
                         <div className="space-y-2">
+                            <label className="text-sm font-medium">Custo Estimado (R$)</label>
+                            <Input type="number" min="0" value={itemCost} onChange={(e) => setItemCost(e.target.value)} placeholder="0.00" />
+                        </div>
+
+                        <div className="space-y-2 border-t border-zinc-100 dark:border-zinc-800 pt-4">
                             <label className="text-sm font-medium">Imagem Ilustrativa (Opcional)</label>
                             <div className="flex flex-col gap-2">
                                 <Input
@@ -634,22 +632,25 @@ export default function TripDetailsPage({ params }: { params: Promise<{ tripId: 
                                     accept="image/*"
                                     onChange={(e) => handleImageUpload(e, setItemImageUrl)}
                                     disabled={isUploading}
-                                    className="cursor-pointer"
+                                    className="cursor-pointer file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
                                 />
                                 {itemImageUrl && (
-                                    <div className="h-20 w-full rounded-md overflow-hidden relative border border-zinc-200 dark:border-zinc-800">
+                                    <div className="h-28 w-full rounded-md overflow-hidden shadow-sm mt-1 border relative border-zinc-200 dark:border-zinc-800">
                                         <img src={itemImageUrl} alt="Imagem Preview" className="w-full h-full object-cover" />
                                     </div>
                                 )}
                             </div>
                         </div>
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium">Anotações (Opcional)</label>
-                            <Input value={itemDesc} onChange={(e) => setItemDesc(e.target.value)} placeholder="Ex: Levar ingressos impressos" />
+                        <div className="space-y-2 border-t border-zinc-100 dark:border-zinc-800 pt-4">
+                            <label className="text-sm font-medium">Anotações Relevantes</label>
+                            <Input value={itemDesc} onChange={(e) => setItemDesc(e.target.value)} placeholder="Avisos, dicas de ingressos ou tickets..." />
                         </div>
-                        <Button type="submit" className="w-full" disabled={createItemMutation.isPending || updateItemMutation.isPending}>
-                            {createItemMutation.isPending || updateItemMutation.isPending ? "Salvando..." : "Salvar Atividade"}
-                        </Button>
+
+                        <div className="md:col-span-2 flex justify-end mt-2">
+                            <Button type="submit" className="w-full md:w-auto px-8 shadow-md" disabled={createItemMutation.isPending || updateItemMutation.isPending}>
+                                {createItemMutation.isPending || updateItemMutation.isPending ? "Salvando..." : "Salvar Atividade"}
+                            </Button>
+                        </div>
                     </form>
                 </DialogContent>
             </Dialog>

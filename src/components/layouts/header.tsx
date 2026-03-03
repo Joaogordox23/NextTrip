@@ -48,9 +48,14 @@ export function Header() {
                     <nav className="flex items-center gap-4 text-sm font-medium">
 
                         {user.role === "ADMIN" && (
-                            <Link href="/admin/suggestions" className="transition-colors hover:text-foreground/80 text-foreground">
-                                Revisar Sugestões
-                            </Link>
+                            <>
+                                <Link href="/admin/clients" className="transition-colors hover:text-primary font-medium text-foreground">
+                                    Clientes
+                                </Link>
+                                <Link href="/admin/suggestions" className="transition-colors hover:text-primary font-medium text-foreground">
+                                    Sugestões
+                                </Link>
+                            </>
                         )}
 
                         <DropdownMenu>
